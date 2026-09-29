@@ -1,0 +1,547 @@
+/* Tema: miracdeprem.com "Gece Şehri" paleti. Renkler RGB üçlüsü; rgb(var(--c-accent) / 0.3) ile saydamlık verilebilir. */
+:root {
+  --c-bg: 11 15 21;
+  --c-surface: 19 26 37;
+  --c-elevated: 27 36 50;
+  --c-line: 41 52 68;
+  --c-ink: 236 239 244;
+  --c-muted: 156 167 184;
+  --c-subtle: 107 120 139;
+  --c-accent: 245 199 126;
+  --c-accent-strong: 255 217 154;
+  --c-accent-ink: 26 19 5;
+  --c-o: 130 170 255;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --sky: radial-gradient(1200px 600px at 85% -10%, rgb(245 199 126 / 0.07), transparent 60%),
+    radial-gradient(1.5px 1.5px at 12% 18%, rgb(236 239 244 / 0.7), transparent),
+    radial-gradient(1px 1px at 28% 42%, rgb(236 239 244 / 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 47% 12%, rgb(236 239 244 / 0.6), transparent),
+    radial-gradient(1px 1px at 66% 34%, rgb(236 239 244 / 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 78% 8%, rgb(236 239 244 / 0.7), transparent),
+    radial-gradient(1px 1px at 91% 48%, rgb(236 239 244 / 0.4), transparent),
+    radial-gradient(1px 1px at 7% 63%, rgb(236 239 244 / 0.4), transparent),
+    rgb(var(--c-bg));
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  /* Alacakaranlık: kırık beyaz ve gri-mavi tonlar, yıldız yok */
+  --c-bg: 222 228 236;
+  --c-surface: 236 240 245;
+  --c-elevated: 229 234 241;
+  --c-line: 196 205 217;
+  --c-ink: 22 30 46;
+  --c-muted: 72 84 104;
+  --c-subtle: 104 117 138;
+  --c-accent: 166 77 10;
+  --c-accent-strong: 134 60 12;
+  --c-accent-ink: 255 250 243;
+  --c-o: 36 80 190;
+  --sky: linear-gradient(180deg, #d3dce8 0%, #dde3eb 50%, #e4ddd4 100%);
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--sky) fixed;
+  color: rgb(var(--c-ink));
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: rgb(var(--c-accent));
+  text-decoration: none;
+}
+a:hover {
+  color: rgb(var(--c-accent-strong));
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--c-accent) / 0.7);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: rgb(var(--c-accent) / 0.3);
+}
+
+/* ---------- Üst çubuk ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgb(var(--c-muted));
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+.brand:hover {
+  text-decoration: none;
+  color: rgb(var(--c-ink));
+}
+
+.brand-logo {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgb(var(--c-accent) / 0.6);
+  border-radius: 0.6rem;
+  color: rgb(var(--c-accent));
+  font-weight: 500;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lang-switch {
+  display: flex;
+  padding: 0.2rem;
+  border: 1px solid rgb(var(--c-line) / 0.7);
+  border-radius: 0.5rem;
+  background: rgb(var(--c-surface) / 0.6);
+}
+.lang-switch button {
+  padding: 0.25rem 0.55rem;
+  border: 0;
+  border-radius: 0.35rem;
+  background: none;
+  color: rgb(var(--c-subtle));
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.lang-switch button[aria-pressed='true'] {
+  background: rgb(var(--c-accent) / 0.15);
+  color: rgb(var(--c-accent));
+}
+
+.icon-button {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: none;
+  color: rgb(var(--c-muted));
+  cursor: pointer;
+}
+.icon-button:hover {
+  background: rgb(var(--c-ink) / 0.06);
+  color: rgb(var(--c-ink));
+}
+.icon-button svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* Koyu temada güneş (açığa geç), açık temada ay (koyuya geç) görünür */
+.icon-moon,
+[data-theme='light'] .icon-sun {
+  display: none;
+}
+[data-theme='light'] .icon-moon {
+  display: block;
+}
+
+/* ---------- Sayfa ---------- */
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0.5rem 1rem 1.5rem;
+}
+
+.intro {
+  text-align: center;
+}
+
+h1 {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 7vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  text-shadow: 0 0 40px rgb(var(--c-accent) / 0.15);
+}
+
+.tagline {
+  margin: 0 0 1.25rem;
+  color: rgb(var(--c-muted));
+}
+
+
+/* ========== ADAM ASMACA ========== */
+:root {
+  --c-danger: 239 120 120;
+}
+[data-theme='light'] {
+  --c-danger: 178 40 40;
+}
+
+/* Dar ekranda alt alta; geniş ekranda solda çizim, sağda oyun (bkz. en alttaki medya sorgusu) */
+.game {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  max-width: 34rem;
+}
+
+/* ---------- Çizim ---------- */
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid rgb(var(--c-line) / 0.7);
+  border-radius: 1rem;
+  background: rgb(var(--c-surface) / 0.55);
+  backdrop-filter: blur(4px);
+}
+
+.figure {
+  width: min(100%, 13rem);
+  height: auto;
+  overflow: visible;
+}
+.figure line,
+.figure circle {
+  fill: none;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+.gallows {
+  stroke: rgb(var(--c-subtle));
+}
+/* Adamın parçaları gizli başlar; yanlış tahminde sırayla "çizilir" (pathLength=1 sayesinde tek sayıyla) */
+.part {
+  stroke: rgb(var(--c-accent));
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.4s ease-out;
+}
+.part.shown {
+  stroke-dashoffset: 0;
+}
+.figure.lost .part {
+  stroke: rgb(var(--c-danger));
+}
+.figure.won .part {
+  filter: drop-shadow(0 0 6px rgb(var(--c-accent) / 0.6));
+}
+
+.lives {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.75rem 0 0;
+  color: rgb(var(--c-muted));
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.lives-dots {
+  display: flex;
+  gap: 0.3rem;
+}
+.lives-dots span {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: rgb(var(--c-accent));
+  box-shadow: 0 0 8px rgb(var(--c-accent) / 0.5);
+}
+.lives-dots span.lost {
+  background: rgb(var(--c-line));
+  box-shadow: none;
+}
+
+/* ---------- Oyun paneli ---------- */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.category {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.category label {
+  color: rgb(var(--c-subtle));
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: lowercase;
+}
+.category label::before {
+  content: '// ';
+}
+.category select {
+  flex: 1;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgb(var(--c-line) / 0.8);
+  border-radius: 0.5rem;
+  background: rgb(var(--c-surface) / 0.8);
+  color: rgb(var(--c-ink));
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.category select:hover {
+  border-color: rgb(var(--c-accent) / 0.6);
+}
+
+/* Kelime kutuları: uzun kelimelerde küçülür, alt satıra geçer */
+.word {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 3.2rem;
+  margin: 0.25rem 0;
+}
+.slot {
+  display: grid;
+  place-items: end center;
+  width: clamp(1.6rem, 7vw, 2.3rem);
+  height: 3rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 3px solid rgb(var(--c-line));
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 5.5vw, 1.8rem);
+  font-weight: 700;
+  line-height: 1;
+}
+.slot.found {
+  border-color: rgb(var(--c-accent) / 0.8);
+  color: rgb(var(--c-ink));
+  animation: pop 0.25s ease-out;
+}
+.slot.missed {
+  border-color: rgb(var(--c-danger) / 0.7);
+  color: rgb(var(--c-danger));
+}
+
+.status {
+  min-height: 1.5em;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  text-align: center;
+}
+.status::before {
+  content: '$ ';
+  color: rgb(var(--c-accent));
+}
+
+/* ---------- Ekran klavyesi ---------- */
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(2.35rem, 1fr));
+  gap: 0.35rem;
+}
+.key {
+  height: 2.6rem;
+  padding: 0;
+  border: 1px solid rgb(var(--c-line) / 0.8);
+  border-radius: 0.5rem;
+  background: rgb(var(--c-elevated) / 0.8);
+  color: rgb(var(--c-ink));
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, opacity 0.15s;
+}
+.key:not([aria-disabled='true']):hover {
+  border-color: rgb(var(--c-accent) / 0.7);
+  background: rgb(var(--c-accent) / 0.08);
+}
+.key[aria-disabled='true'] {
+  cursor: default;
+}
+.key.correct {
+  border-color: rgb(var(--c-accent) / 0.8);
+  background: rgb(var(--c-accent) / 0.18);
+  color: rgb(var(--c-accent));
+}
+.key.wrong {
+  opacity: 0.35;
+  text-decoration: line-through;
+}
+
+/* ---------- Butonlar ---------- */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.btn {
+  padding: 0.6rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-primary {
+  background: rgb(var(--c-accent));
+  color: rgb(var(--c-accent-ink));
+  font-weight: 600;
+}
+.btn-primary:hover {
+  background: rgb(var(--c-accent-strong));
+}
+.btn-ghost {
+  background: none;
+  color: rgb(var(--c-muted));
+}
+.btn-ghost:hover {
+  background: rgb(var(--c-ink) / 0.06);
+  color: rgb(var(--c-ink));
+}
+
+/* ---------- İstatistikler ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin: 0;
+}
+.stats div {
+  padding: 0.5rem;
+  border: 1px solid rgb(var(--c-line) / 0.7);
+  border-radius: 0.75rem;
+  background: rgb(var(--c-surface) / 0.8);
+  text-align: center;
+}
+.stats dt {
+  overflow: hidden;
+  color: rgb(var(--c-muted));
+  font-size: 0.75rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.stats dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* ---------- Alt bilgi ---------- */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.25rem;
+  padding: 1.5rem 1rem;
+  border-top: 1px solid rgb(var(--c-line) / 0.5);
+  color: rgb(var(--c-subtle));
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+.noscript {
+  text-align: center;
+}
+
+/* ---------- Animasyonlar ---------- */
+@keyframes pop {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+[data-theme='light'] h1,
+[data-theme='light'] .lives-dots span {
+  text-shadow: none;
+  box-shadow: none;
+}
+[data-theme='light'] .figure.won .part {
+  filter: none;
+}
+
+/* ---------- Geniş ekran: iki sütun ---------- */
+@media (min-width: 860px) {
+  .game {
+    grid-template-columns: 18rem minmax(0, 1fr);
+    gap: 2.5rem;
+    align-items: start;
+    max-width: 60rem;
+  }
+  .stage {
+    padding: 1.5rem 1rem;
+  }
+  .figure {
+    width: 100%;
+  }
+}
+
+/* ---------- Dar ekran ---------- */
+@media (max-width: 480px) {
+  .brand-path {
+    display: none;
+  }
+  .figure {
+    width: 9rem;
+  }
+  .stats dt {
+    font-size: 0.7rem;
+  }
+}
