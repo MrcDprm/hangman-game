@@ -1,4 +1,4 @@
-// Oyun kuralları: harf tahmini, kalan hak, kazanma ve kaybetme. Arayüzden bağımsızdır; tarayıcı olmadan test edilir.
+// Oyun kuralları: harf tahmini, kalan hak, ipucu, kazanma ve kaybetme. Arayüzden bağımsızdır; tarayıcı olmadan test edilir.
 
 export const MAX_MISTAKES = 6;
 
@@ -17,9 +17,33 @@ export function normalizeLetter(input, lang) {
   return ALPHABETS[lang].includes(letter) ? letter : null;
 }
 
-/** Yeni oyun. status: 'playing', 'won' ya da 'lost'. */
-export function createGame(word, lang) {
-  return { word, lang, guessed: [], mistakes: 0, status: 'playing' };
+/** Uzun kelimelerde baştan açık gelen harf sayısı: 8-10 harfte 1, 11 ve üstünde 2. */
+export function givenLetterCount(word) {
+  const length = [...word].length;
+  if (length >= 11) return 2;
+  if (length >= 8) return 1;
+  return 0;
+}
+
+/** Kelimede henüz açılmamış harfler (her harf bir kez). */
+export function hiddenLetters(state) {
+  return [...new Set(state.word)].filter((letter) => !state.guessed.includes(letter));
+}
+
+const pick = (items, random) => items[Math.floor(random() * items.length)];
+
+/**
+ * Yeni oyun. status: 'playing', 'won' ya da 'lost'.
+ * Uzun kelimelerde bir iki harf baştan açılır; en az iki farklı harf her zaman gizli kalır.
+ */
+export function createGame(word, lang, random = Math.random) {
+  const guessed = [];
+  for (let i = 0; i < givenLetterCount(word); i++) {
+    const hidden = [...new Set(word)].filter((letter) => !guessed.includes(letter));
+    if (hidden.length <= 2) break;
+    guessed.push(pick(hidden, random));
+  }
+  return { word, lang, guessed, given: guessed.length, mistakes: 0, status: 'playing', hintLetter: null };
 }
 
 /**
@@ -38,6 +62,21 @@ export function guess(state, input) {
   else if (mistakes >= MAX_MISTAKES) status = 'lost';
 
   return { ...state, guessed, mistakes, status };
+}
+
+/**
+ * İpucu kelime başına bir kez kullanılır. Son hakta kullanılamaz (oyuncuyu kaybettirmesin)
+ * ve tek gizli harf kaldığında kullanılamaz (oyunu ipucu kazanmasın).
+ */
+export function canUseHint(state) {
+  return state.status === 'playing' && state.hintLetter === null && livesLeft(state) > 1 && hiddenLetters(state).length > 1;
+}
+
+/** Gizli harflerden birini açar, karşılığında bir hak gider. */
+export function useHint(state, random = Math.random) {
+  if (!canUseHint(state)) return state;
+  const letter = pick(hiddenLetters(state), random);
+  return { ...state, guessed: [...state.guessed, letter], mistakes: state.mistakes + 1, hintLetter: letter };
 }
 
 /** Kelimenin harfleri ve her birinin bulunup bulunmadığı (ekrandaki kutular için). */

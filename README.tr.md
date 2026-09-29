@@ -13,6 +13,8 @@ Sade HTML, CSS ve JavaScript ile yazılmış, Türkçe ve İngilizce kelime kate
 - [ ] Harfler ekrandaki klavyeyle ya da bilgisayar klavyesiyle tahmin edilir; alfabe dile göre değişir (Türkçede ç, ğ, ı, ö, ş, ü var)
 - [ ] 6 yanlış tahmin hakkı; adam adım adım çizilir ve kalan hak gösterilir
 - [ ] Kazanma ve kaybetme ekranı, kelime gösterilir
+- [ ] İpucu butonu: bir hak karşılığında gizli bir harf açar, kelime başına bir kez
+- [ ] Uzun kelimeler bir iki harfi açık başlar (8-10 harf: 1, 11 ve üstü: 2)
 - [ ] Kategorideki bütün kelimeler oynanmadan aynı kelime tekrar gelmez
 - [ ] Galibiyet, mağlubiyet ve seri sayısı; sayfa yenilense de korunur
 - [ ] Türkçe ve İngilizce arayüz, portfolyo sitemle uyumlu koyu ve açık tema
@@ -21,7 +23,6 @@ Sade HTML, CSS ve JavaScript ile yazılmış, Türkçe ve İngilizce kelime kate
 - [ ] Vercel'de yayında
 
 **Sonra eklenecekler**
-- İpucu butonu (bir hak karşılığında bir harf açar)
 - Kelime uzunluğuna göre zorluk
 - Bir oyuncunun kelimeyi girdiği iki kişilik mod
 

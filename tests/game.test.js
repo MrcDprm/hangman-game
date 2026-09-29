@@ -1,6 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createGame, guess, wordSlots, livesLeft, normalizeLetter, MAX_MISTAKES } from '../src/game.js';
+import {
+  createGame, guess, wordSlots, livesLeft, normalizeLetter, hiddenLetters, canUseHint, useHint, MAX_MISTAKES,
+} from '../src/game.js';
 
 /** Harfleri sırayla tahmin eder. */
 function play(word, letters, lang = 'en') {
@@ -53,4 +55,43 @@ test('Türkçede I küçük ı, İ küçük i olur; İngilizcede I küçük i ol
   assert.equal(wordSlots(state)[0].found, true);
   assert.equal(state.mistakes, 0);
   assert.equal(guess(state, 'i').mistakes, 1);
+});
+
+
+test('uzun kelimelerde harf açık gelir: 8-10 harfte 1, 11 ve üstünde 2, kısa kelimede yok', () => {
+  assert.equal(createGame('cat', 'en').guessed.length, 0);
+  const medium = createGame('elephant', 'en'); // 8 harf
+  assert.equal(medium.given, 1);
+  assert.ok(wordSlots(medium).some((slot) => slot.found));
+  const long = createGame('afyonkarahisar', 'tr'); // 14 harf
+  assert.equal(long.given, 2);
+  assert.equal(long.mistakes, 0);
+  assert.equal(long.status, 'playing');
+});
+
+test('açık gelen harfler kelimeyi asla bitirmez, en az iki farklı harf gizli kalır', () => {
+  // 11 harf ama sadece 3 farklı harf: en fazla 1 harf açılabilir
+  const state = createGame('aaaabbbbccc', 'en');
+  assert.equal(state.given, 1);
+  assert.equal(hiddenLetters(state).length, 2);
+});
+
+test('ipucu gizli bir harfi açar, bir hak götürür ve kelime başına bir kez kullanılır', () => {
+  const start = createGame('cat', 'en');
+  const hinted = useHint(start, () => 0);
+  assert.equal(hinted.hintLetter, 'c');
+  assert.equal(hinted.mistakes, 1);
+  assert.equal(wordSlots(hinted)[0].found, true);
+  assert.equal(canUseHint(hinted), false);
+  assert.equal(useHint(hinted), hinted);
+});
+
+test('ipucu son hakta ve tek gizli harf kalınca kullanılamaz', () => {
+  const lastLife = play('cat', 'bdefg');
+  assert.equal(livesLeft(lastLife), 1);
+  assert.equal(canUseHint(lastLife), false);
+
+  const oneHidden = play('cat', 'ca');
+  assert.equal(canUseHint(oneHidden), false);
+  assert.equal(useHint(oneHidden), oneHidden);
 });

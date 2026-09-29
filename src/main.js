@@ -1,5 +1,5 @@
 // Arayüz: kategori, kelime kutuları, ekran klavyesi, adam çizimi ve istatistikler. Oyun kuralları game.js'te.
-import { ALPHABETS, MAX_MISTAKES, createGame, guess, livesLeft, wordSlots } from './game.js';
+import { ALPHABETS, MAX_MISTAKES, canUseHint, createGame, guess, livesLeft, useHint, wordSlots } from './game.js';
 import { CATEGORIES, createPicker, loadWords } from './words.js';
 import { EMPTY_STATS, loadSettings, recordResult, saveSettings } from './storage.js';
 import { translate } from './i18n.js';
@@ -18,6 +18,7 @@ const el = {
   status: document.getElementById('status'),
   keyboard: document.getElementById('keyboard'),
   newWord: document.getElementById('new-word'),
+  hint: document.getElementById('hint'),
   resetStats: document.getElementById('reset-stats'),
   themeToggle: document.getElementById('theme-toggle'),
   langButtons: document.querySelectorAll('[data-lang]'),
@@ -68,11 +69,12 @@ async function newGame() {
   render();
 }
 
-function play(input) {
+/** Tahmin ve ipucu aynı yoldan geçer: oyun durumunu değiştirir, bitince istatistiğe işler. */
+function update(next) {
   if (!game) return;
   const before = game;
-  game = guess(game, input);
-  if (game === before) return; // geçersiz, tekrar ya da oyun bitmiş
+  game = next(game);
+  if (game === before) return; // geçersiz, tekrar, izin verilmeyen ipucu ya da oyun bitmiş
 
   if (game.status !== 'playing') {
     settings.stats = recordResult(settings.stats, game.status === 'won');
@@ -86,6 +88,7 @@ function render() {
   renderFigure();
   renderWord();
   renderKeyboard();
+  renderHint();
   renderStats();
   el.status.textContent = statusText();
 }
@@ -156,6 +159,11 @@ function renderKeyboard() {
   }
 }
 
+function renderHint() {
+  // disabled yerine aria-disabled: ipucu alındıktan sonra odak butonda kalır
+  el.hint.setAttribute('aria-disabled', String(!game || !canUseHint(game)));
+}
+
 function renderStats() {
   for (const [name, node] of Object.entries(el.stats)) node.textContent = settings.stats[name];
 }
@@ -166,8 +174,9 @@ function statusText() {
   if (game.status === 'won') return t('won', { word: upper(game.word) });
   if (game.status === 'lost') return t('lost', { word: upper(game.word) });
 
+  if (game.guessed.length === game.given) return t('prompt'); // baştan açık gelen harfler tahmin sayılmaz
   const letter = game.guessed.at(-1);
-  if (!letter) return t('prompt');
+  if (letter === game.hintLetter) return t('hinted', { letter: upper(letter) });
   return t(game.word.includes(letter) ? 'correct' : 'wrong', { letter: upper(letter) });
 }
 
@@ -187,7 +196,7 @@ function renderStatic() {
 
 el.keyboard.addEventListener('click', (event) => {
   const key = event.target.closest('.key');
-  if (key && key.getAttribute('aria-disabled') !== 'true') play(key.dataset.letter);
+  if (key && key.getAttribute('aria-disabled') !== 'true') update((state) => guess(state, key.dataset.letter));
 });
 
 // Bilgisayar klavyesi: harf tuşu tahmin eder; oyun bitmişken Enter yeni kelime getirir
@@ -198,7 +207,7 @@ document.addEventListener('keydown', (event) => {
     if (game && game.status !== 'playing' && !event.target.closest('button')) newGame();
     return;
   }
-  play(event.key);
+  update((state) => guess(state, event.key));
 });
 
 el.category.addEventListener('change', () => {
@@ -208,6 +217,7 @@ el.category.addEventListener('change', () => {
 });
 
 el.newWord.addEventListener('click', newGame);
+el.hint.addEventListener('click', () => update(useHint));
 
 el.resetStats.addEventListener('click', () => {
   settings.stats = { ...EMPTY_STATS };

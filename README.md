@@ -13,6 +13,8 @@ A hangman word game in plain HTML, CSS and JavaScript, with word categories in T
 - [ ] Guess letters with the on-screen keyboard or the physical keyboard; the alphabet follows the language (Turkish has ç, ğ, ı, ö, ş, ü)
 - [ ] Six wrong guesses allowed; the hangman is drawn step by step and remaining lives are shown
 - [ ] Win and lose screens that reveal the word
+- [ ] Hint button: reveals one hidden letter for a life, once per word
+- [ ] Long words start with one or two letters revealed (8–10 letters: 1, 11+: 2)
 - [ ] No repeated words until every word in the category has been played
 - [ ] Wins, losses and current streak, kept after a page refresh
 - [ ] Turkish and English interface, dark and light theme matching my portfolio
@@ -21,7 +23,6 @@ A hangman word game in plain HTML, CSS and JavaScript, with word categories in T
 - [ ] Deployed on Vercel
 
 **Later**
-- Hint button (reveals one letter for a life)
 - Difficulty by word length
 - Two-player mode where one player enters the word
 
