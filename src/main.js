@@ -118,6 +118,7 @@ function renderWord() {
   }
   const slots = wordSlots(game);
   const lost = game.status === 'lost';
+  el.word.style.setProperty('--letters', slots.length); // CSS kutu genişliğini buna göre hesaplar
   el.word.replaceChildren(
     ...slots.map(({ letter, found }) => {
       const slot = document.createElement('span');

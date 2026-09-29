@@ -336,27 +336,30 @@ h1 {
   border-color: rgb(var(--c-accent) / 0.6);
 }
 
-/* Kelime kutuları: uzun kelimelerde küçülür, alt satıra geçer */
+/* Kelime kutuları: kelime her zaman tek satırda kalır, harf sayısı arttıkça kutular küçülür.
+   --letters değerini main.js yazar; cqi = kelime alanı genişliğinin %1'i. */
 .word {
+  --gap: 0.3rem;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 0.4rem;
+  gap: var(--gap);
   min-height: 3.2rem;
   margin: 0.25rem 0;
+  container-type: inline-size;
 }
 .slot {
   display: grid;
   place-items: end center;
-  width: clamp(1.6rem, 7vw, 2.3rem);
+  width: min(2.3rem, (100cqi - (var(--letters, 1) - 1) * var(--gap)) / var(--letters, 1));
   height: 3rem;
   padding-bottom: 0.3rem;
   border-bottom: 3px solid rgb(var(--c-line));
   font-family: var(--font-display);
-  font-size: clamp(1.3rem, 5.5vw, 1.8rem);
+  font-size: min(1.8rem, 75cqi / var(--letters, 1));
   font-weight: 700;
   line-height: 1;
 }
+
 .slot.found {
   border-color: rgb(var(--c-accent) / 0.8);
   color: rgb(var(--c-ink));
