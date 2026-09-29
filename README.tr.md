@@ -9,7 +9,7 @@ Sade HTML, CSS ve JavaScript ile yazılmış, Türkçe ve İngilizce kelime kate
 ## Özellikler (plan)
 
 **MVP**
-- [ ] Kelime kategorileri (hayvanlar, ülkeler, yiyecekler, meslekler, teknoloji); Türkçe ve İngilizce için ayrı kelime listeleri
+- [ ] Her birinde 100 kelime olan 10 kategori (hayvanlar, ülkeler, şehirler, yiyecek ve içecek, meslekler, teknoloji, spor, doğa, ev, bilim); Türkçe ve İngilizce için ayrı listeler, toplam 2.000 kelime
 - [ ] Harfler ekrandaki klavyeyle ya da bilgisayar klavyesiyle tahmin edilir; alfabe dile göre değişir (Türkçede ç, ğ, ı, ö, ş, ü var)
 - [ ] 6 yanlış tahmin hakkı; adam adım adım çizilir ve kalan hak gösterilir
 - [ ] Kazanma ve kaybetme ekranı, kelime gösterilir
