@@ -1,5 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- miracdeprem.com ikonu (portfolio/app/icon.tsx ile aynı değerler) -->
-  <rect width="32" height="32" rx="6" fill="#0f1419"/>
-  <text x="16" y="16.5" fill="#c5cedd" font-family="system-ui, 'Segoe UI', sans-serif" font-size="13.5" font-weight="400" letter-spacing="-0.26" text-anchor="middle" dominant-baseline="central">MD</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#0b0f15"/>
+  <path d="M10 55h22M16 55V9h28v11M16 21L27 9" fill="none" stroke="#8a97ab" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="none" stroke="#f5c77e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="44" cy="25.5" r="5.5"/>
+    <path d="M44 31v11M44 34l-6 5M44 34l6 5M44 42l-5 8M44 42l5 8"/>
+  </g>
 </svg>
