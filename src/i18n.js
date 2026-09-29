@@ -41,6 +41,7 @@ export const MESSAGES = {
     language: 'Dil',
     portfolio: 'Portfolyo',
     source: 'Kaynak kodu',
+    jsProjects: 'JS projeleri',
   },
   en: {
     pageTitle: 'Hangman · Miraç Deprem',
@@ -83,6 +84,7 @@ export const MESSAGES = {
     language: 'Language',
     portfolio: 'Portfolio',
     source: 'Source code',
+    jsProjects: 'JS projects',
   },
 };
 
