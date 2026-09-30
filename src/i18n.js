@@ -1,7 +1,6 @@
 // Arayüz metinleri (Türkçe / İngilizce). {name} yer tutucuları çağrılırken doldurulur.
 export const MESSAGES = {
   tr: {
-    pageTitle: 'Adam Asmaca · Miraç Deprem',
     title: 'Adam Asmaca',
     tagline: 'Harfleri tahmin et, adamı kurtar. 10 kategoride 1.000 kelime.',
     category: 'Kategori',
@@ -59,7 +58,6 @@ export const MESSAGES = {
     jsProjects: 'JS projeleri',
   },
   en: {
-    pageTitle: 'Hangman · Miraç Deprem',
     title: 'Hangman',
     tagline: 'Guess the letters, save the man. 1,000 words in 10 categories.',
     category: 'Category',

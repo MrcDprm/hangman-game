@@ -5,7 +5,7 @@ export const CATEGORIES = ['animals', 'countries', 'cities', 'food', 'jobs', 'te
 
 /** Kelime dosyasını indirir ve doğrular. fetchFn testlerde sahtesiyle değiştirilebilir. */
 export async function loadWords(lang, fetchFn = fetch) {
-  const response = await fetchFn(`data/words-${lang}.json`);
+  const response = await fetchFn(`/data/words-${lang}.json`);
   if (!response.ok) throw new Error(`words-${lang}.json yüklenemedi (${response.status})`);
   return validateWords(await response.json(), lang);
 }

@@ -5,9 +5,18 @@ import { EMPTY_STATS, loadSettings, recordResult, saveSettings } from './storage
 import { translate } from './i18n.js';
 import { applyTheme, nextTheme } from './theme.js';
 import { initFeedback } from './feedback.js';
+import { categoryFromPath, pageMeta, pathFor } from './routes.js';
 
 const browserLang = navigator.language?.toLowerCase().startsWith('tr') ? 'tr' : 'en';
 const settings = loadSettings(undefined, browserLang);
+// Adresteki ?lang=en / ?lang=tr kayıtlı tercihten önce gelir (paylaşılan ve Google'dan gelen linkler)
+const urlLang = new URLSearchParams(window.location.search).get('lang');
+if (urlLang === 'tr' || urlLang === 'en') settings.lang = urlLang;
+// /hayvanlar gibi bir adresle gelindiyse o kategori açılır
+const routeCategory = categoryFromPath(window.location.pathname);
+if (routeCategory) settings.category = routeCategory;
+// Adreste görünen kategori: ana adresle gelindiyse kullanıcı kategori seçene kadar boş kalır
+let addressCategory = routeCategory;
 
 const el = {
   category: document.getElementById('category'),
@@ -182,10 +191,22 @@ function statusText() {
   return t(game.word.includes(letter) ? 'correct' : 'wrong', { letter: upper(letter) });
 }
 
+/**
+ * Adres (/hayvanlar) ve sekme başlığı güncellenir. replaceState geçmişe kayıt eklemez;
+ * geri tuşunun davranışı değişmez.
+ */
+function updateAddress() {
+  const target = `${pathFor(addressCategory)}${settings.lang === 'en' ? '?lang=en' : ''}`;
+  if (`${window.location.pathname}${window.location.search}` !== target) window.history.replaceState(null, '', target);
+  const meta = pageMeta(addressCategory, settings.lang);
+  document.title = meta.title;
+  document.querySelector('meta[name="description"]')?.setAttribute('content', meta.description);
+}
+
 /** Dil değişince sabit metinler (data-i18n), kategori listesi ve dil düğmeleri güncellenir. */
 function renderStatic() {
   document.documentElement.lang = settings.lang;
-  document.title = t('pageTitle');
+  updateAddress();
   for (const node of document.querySelectorAll('[data-i18n]')) node.textContent = t(node.dataset.i18n);
   for (const node of document.querySelectorAll('[data-i18n-aria]')) node.setAttribute('aria-label', t(node.dataset.i18nAria));
   for (const button of el.langButtons) button.setAttribute('aria-pressed', String(button.dataset.lang === settings.lang));
@@ -215,6 +236,8 @@ document.addEventListener('keydown', (event) => {
 el.category.addEventListener('change', () => {
   settings.category = el.category.value;
   saveSettings(settings);
+  addressCategory = settings.category;
+  updateAddress();
   newGame();
 });
 
