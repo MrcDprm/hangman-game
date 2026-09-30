@@ -27,6 +27,7 @@ A hangman word game in plain HTML, CSS and JavaScript. Guess the hidden word let
   - Respects the "reduce motion" system setting.
 - **Turkish and English**, with a **dark and light theme** that match my [portfolio](https://www.miracdeprem.com).
 - **Responsive:** two columns on desktop, one column on phones; long words always stay on one line.
+- **Feedback:** a small button opens a form (name optional, email or phone, message) that sends straight to me through my portfolio site.
 
 ## Screenshots
 

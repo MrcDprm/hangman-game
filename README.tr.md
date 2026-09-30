@@ -27,6 +27,7 @@ Sade HTML, CSS ve JavaScript ile yazılmış bir adam asmaca oyunu. Gizli kelime
   - Sistemdeki "hareketi azalt" ayarına uyar.
 - **Türkçe ve İngilizce**, [portfolyo sitemle](https://www.miracdeprem.com) uyumlu **koyu ve açık tema**.
 - **Duyarlı tasarım:** Masaüstünde iki sütun, telefonda tek sütun; uzun kelimeler her zaman tek satırda kalır.
+- **Geri bildirim:** Küçük bir düğme; ad (isteğe bağlı), e-posta ya da telefon ve mesaj içeren formu açar. Mesaj portfolyo sitem üzerinden doğrudan bana ulaşır.
 
 ## Ekran Görüntüleri
 
