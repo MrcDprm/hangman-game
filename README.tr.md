@@ -25,6 +25,7 @@ Sade HTML, CSS ve JavaScript ile yazılmış bir adam asmaca oyunu. Gizli kelime
   - Tamamen klavyeyle oynanabilir; tur bitince Enter yeni kelime getirir.
   - Ekran okuyucu kelimenin durumunu ("Kelime, 5 harf: C, R, A, boş, boş") ve her tuşun durumunu okur.
   - Sistemdeki "hareketi azalt" ayarına uyar.
+- **Her kategorinin kendi adresi:** örneğin [/hayvanlar](https://hangman.miracdeprem.com/hayvanlar) ya da [/meslekler](https://hangman.miracdeprem.com/meslekler) oyunu o kategoride açar; Türkçe ya da İngilizce (`?lang=en`).
 - **Türkçe ve İngilizce**, [portfolyo sitemle](https://www.miracdeprem.com) uyumlu **koyu ve açık tema**.
 - **Duyarlı tasarım:** Masaüstünde iki sütun, telefonda tek sütun; uzun kelimeler her zaman tek satırda kalır.
 - **Geri bildirim:** Küçük bir düğme; ad (isteğe bağlı), e-posta ya da telefon ve mesaj içeren formu açar. Mesaj portfolyo sitem üzerinden doğrudan bana ulaşır.
@@ -48,10 +49,10 @@ Sade HTML, CSS ve JavaScript ile yazılmış bir adam asmaca oyunu. Gizli kelime
 ```bash
 git clone https://github.com/MrcDprm/hangman-game.git
 cd hangman-game
-python -m http.server 5173
+npm run dev
 ```
 
-Sonra `http://localhost:5173` adresini aç. Kelime listeleri `fetch` ile yükleniyor ve ES modülleri `file://` üzerinden çalışmıyor; bu yüzden yerel bir sunucu gerekir. Herhangi bir statik sunucu olur.
+Sonra `http://localhost:5175` adresini aç. Küçük geliştirme sunucusu (Node.js 20 veya üstü) dosyaları sunar, canlı sitedeki güvenlik başlıklarını ekler ve `/hayvanlar` gibi adresleri Vercel'deki gibi karşılar.
 
 Testleri çalıştırmak için (Node.js 20 veya üstü):
 

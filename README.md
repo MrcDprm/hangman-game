@@ -25,6 +25,7 @@ A hangman word game in plain HTML, CSS and JavaScript. Guess the hidden word let
   - Full keyboard play; Enter starts a new word when the round is over.
   - Screen readers hear the word pattern ("Word, 5 letters: C, R, A, blank, blank") and each key's state.
   - Respects the "reduce motion" system setting.
+- **An address for every category:** for example [/hayvanlar](https://hangman.miracdeprem.com/hayvanlar) or [/meslekler](https://hangman.miracdeprem.com/meslekler) opens the game in that category, in Turkish or English (`?lang=en`).
 - **Turkish and English**, with a **dark and light theme** that match my [portfolio](https://www.miracdeprem.com).
 - **Responsive:** two columns on desktop, one column on phones; long words always stay on one line.
 - **Feedback:** a small button opens a form (name optional, email or phone, message) that sends straight to me through my portfolio site.
@@ -48,10 +49,10 @@ Play it online at [hangman.miracdeprem.com](https://hangman.miracdeprem.com), or
 ```bash
 git clone https://github.com/MrcDprm/hangman-game.git
 cd hangman-game
-python -m http.server 5173
+npm run dev
 ```
 
-Then open `http://localhost:5173`. The word lists are loaded with `fetch` and ES modules do not load from `file://`, so a local server is needed. Any static server works.
+Then open `http://localhost:5175`. The small development server (Node.js 20 or newer) serves the files, adds the same security headers as the live site and answers addresses like `/hayvanlar` the way Vercel does.
 
 Run the tests (Node.js 20 or newer):
 
