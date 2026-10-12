@@ -55,7 +55,7 @@ export const MESSAGES = {
     feedbackNeedMessage: 'Mesaj en az 5 karakter olmalı.',
     feedbackTooMany: 'Çok hızlı gönderildi. Bir dakika sonra tekrar dene.',
     feedbackFailed: 'Gönderilemedi. Biraz sonra tekrar dene.',
-    jsProjects: 'JS projeleri',
+    jsProjects: 'Projelerim',
   },
   en: {
     title: 'Hangman',
@@ -112,7 +112,7 @@ export const MESSAGES = {
     feedbackNeedMessage: 'The message needs at least 5 characters.',
     feedbackTooMany: 'Too many messages. Try again in a minute.',
     feedbackFailed: 'Could not send. Please try again later.',
-    jsProjects: 'JS projects',
+    jsProjects: 'My projects',
   },
 };
 
