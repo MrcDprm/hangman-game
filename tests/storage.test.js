@@ -20,24 +20,24 @@ test('kayıt yoksa varsayılan ayarlar gelir', () => {
   assert.deepEqual(loadSettings(fakeStorage(), 'en'), {
     lang: 'en',
     theme: 'dark',
-    category: 'animals',
+    category: 'wild_animals',
     stats: { wins: 0, losses: 0, streak: 0, bestStreak: 0 },
   });
 });
 
 test('kaydedilen ayarlar geri okunur, bilinmeyen alanlar yazılmaz', () => {
   const storage = fakeStorage();
-  const settings = { lang: 'tr', theme: 'light', category: 'science', stats: { wins: 5, losses: 2, streak: 3, bestStreak: 4 } };
+  const settings = { lang: 'tr', theme: 'light', category: 'elements', stats: { wins: 5, losses: 2, streak: 3, bestStreak: 4 } };
   assert.equal(saveSettings({ ...settings, extra: 'x' }, storage), true);
   assert.deepEqual(loadSettings(storage), settings);
   assert.equal(JSON.parse(storage.data[STORAGE_KEY]).extra, undefined);
 });
 
 test('bozuk ya da geçersiz kayıt varsayılana döner', () => {
-  assert.equal(loadSettings(fakeStorage({ [STORAGE_KEY]: '{bozuk json' })).category, 'animals');
+  assert.equal(loadSettings(fakeStorage({ [STORAGE_KEY]: '{bozuk json' })).category, 'wild_animals');
   const odd = { lang: 'de', theme: 'pink', category: 'uzay', stats: { wins: -1, losses: 1.5, streak: '9', hacked: 99 } };
   const settings = loadSettings(fakeStorage({ [STORAGE_KEY]: JSON.stringify(odd) }), 'tr');
-  assert.deepEqual(settings, { lang: 'tr', theme: 'dark', category: 'animals', stats: { ...EMPTY_STATS } });
+  assert.deepEqual(settings, { lang: 'tr', theme: 'dark', category: 'wild_animals', stats: { ...EMPTY_STATS } });
   assert.equal(loadSettings(fakeStorage({ [STORAGE_KEY]: '42' })).theme, 'dark');
 });
 

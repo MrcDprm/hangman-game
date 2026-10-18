@@ -17,17 +17,18 @@ test('every category has a unique, URL-safe address', () => {
 });
 
 test('paths and categories map both ways', () => {
-  assert.equal(categoryFromPath('/hayvanlar'), 'animals');
-  assert.equal(categoryFromPath('/Yiyecek-ve-Icecek/'), 'food');
+  assert.equal(categoryFromPath('/vahsi-hayvanlar'), 'wild_animals');
+  assert.equal(categoryFromPath('/hayvanlar'), null); // eski adres vercel.json'da yönlendirilir
+  assert.equal(categoryFromPath('/Spor-Dallari/'), 'sports');
   assert.equal(categoryFromPath('/'), null);
   assert.equal(categoryFromPath('/xyz'), null);
-  assert.equal(pathFor('science'), '/bilim');
+  assert.equal(pathFor('elements'), '/kimyasal-elementler');
   assert.equal(pathFor(null), '/');
 });
 
 test('page titles in both languages', () => {
-  assert.equal(pageMeta('animals', 'tr').title, 'Adam Asmaca: Hayvanlar – Ücretsiz Kelime Oyunu');
-  assert.equal(pageMeta('animals', 'en').title, 'Hangman: Animals – Free Word Game');
+  assert.equal(pageMeta('birds', 'tr').title, 'Adam Asmaca: Kuşlar – Ücretsiz Kelime Oyunu');
+  assert.equal(pageMeta('birds', 'en').title, 'Hangman: Birds – Free Word Game');
   assert.match(pageMeta(null, 'tr').title, /^Adam Asmaca Oyna/);
 });
 
@@ -66,5 +67,5 @@ test('page function serves the home page and the sitemap', async () => {
   assert.match(body, /<title>Adam Asmaca Oyna/);
 
   const sitemap = await (await GET(new Request('https://x/api/page?sitemap=1'))).text();
-  assert.equal((sitemap.match(/<url>/g) ?? []).length, 22);
+  assert.equal((sitemap.match(/<url>/g) ?? []).length, 44); // ana sayfa + 21 kategori, iki dil
 });

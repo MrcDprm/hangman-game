@@ -1,6 +1,6 @@
 // Arayüz: kategori, kelime kutuları, ekran klavyesi, adam çizimi ve istatistikler. Oyun kuralları game.js'te.
 import { ALPHABETS, MAX_MISTAKES, canUseHint, createGame, guess, livesLeft, useHint, wordSlots } from './game.js';
-import { CATEGORIES, createPicker, loadWords } from './words.js';
+import { CATEGORIES, CATEGORY_GROUPS, createPicker, loadWords } from './words.js';
 import { EMPTY_STATS, loadSettings, recordResult, saveSettings } from './storage.js';
 import { translate } from './i18n.js';
 import { applyTheme, nextTheme } from './theme.js';
@@ -211,8 +211,14 @@ function renderStatic() {
   for (const node of document.querySelectorAll('[data-i18n-aria]')) node.setAttribute('aria-label', t(node.dataset.i18nAria));
   for (const button of el.langButtons) button.setAttribute('aria-pressed', String(button.dataset.lang === settings.lang));
 
+  // Kategoriler gruplu listelenir (Hayvanlar, Yerler …); oyuncu neyi tahmin edeceğini bilsin
   el.category.replaceChildren(
-    ...CATEGORIES.map((category) => new Option(t(`cat_${category}`), category, false, category === settings.category)),
+    ...CATEGORY_GROUPS.map((group) => {
+      const optgroup = document.createElement('optgroup');
+      optgroup.label = t(`grp_${group.id}`);
+      optgroup.append(...group.categories.map((category) => new Option(t(`cat_${category}`), category, false, category === settings.category)));
+      return optgroup;
+    }),
   );
 }
 // ---------- Olaylar ----------

@@ -2,7 +2,7 @@
 
 **English** | [Türkçe](README.tr.md)
 
-A hangman word game in plain HTML, CSS and JavaScript. Guess the hidden word letter by letter before the man is drawn. It has 1,000 Turkish and 1,000 English words in 10 categories.
+A hangman word game in plain HTML, CSS and JavaScript. Guess the hidden word letter by letter before the man is drawn. It has about 1,000 Turkish and 1,000 English words in 21 narrow categories, so you always know what you are guessing.
 
 **Live demo:** [hangman.miracdeprem.com](https://hangman.miracdeprem.com)
 
@@ -10,7 +10,7 @@ A hangman word game in plain HTML, CSS and JavaScript. Guess the hidden word let
 
 ## Features
 
-- **10 categories, 2,000 words:** animals, countries, cities, food and drink, jobs, technology, sports, nature, home and science. Each category has 100 words in Turkish and 100 in English.
+- **21 categories in 7 groups, about 2,000 words:** animals (wild animals, pets and farm animals, birds, sea creatures), places (countries, capital cities, provinces of Türkiye / US states, landforms), food (fruits, vegetables, Turkish cuisine / world dishes), sport (sports, sports equipment), home (furniture, kitchen items, clothes), science (computer parts, chemical elements, space) and people (jobs, the human body). Each category has 39 to 100 words per language.
 - **Guessing**
   - Use the on-screen keyboard or your own keyboard.
   - The alphabet follows the language: Turkish has 29 letters (ç, ğ, ı, ö, ş, ü), English has 26.
@@ -25,7 +25,7 @@ A hangman word game in plain HTML, CSS and JavaScript. Guess the hidden word let
   - Full keyboard play; Enter starts a new word when the round is over.
   - Screen readers hear the word pattern ("Word, 5 letters: C, R, A, blank, blank") and each key's state.
   - Respects the "reduce motion" system setting.
-- **An address for every category:** for example [/hayvanlar](https://hangman.miracdeprem.com/hayvanlar) or [/meslekler](https://hangman.miracdeprem.com/meslekler) opens the game in that category, in Turkish or English (`?lang=en`).
+- **An address for every category:** for example [/kuslar](https://hangman.miracdeprem.com/kuslar) or [/meslekler](https://hangman.miracdeprem.com/meslekler) opens the game in that category, in Turkish or English (`?lang=en`).
 - **Turkish and English**, with a **dark and light theme** that match my [portfolio](https://www.miracdeprem.com).
 - **Responsive:** two columns on desktop, one column on phones; long words always stay on one line.
 - **Feedback:** a small button opens a form (name optional, email or phone, message) that sends straight to me through my portfolio site.
@@ -52,7 +52,7 @@ cd hangman-game
 npm run dev
 ```
 
-Then open `http://localhost:5175`. The small development server (Node.js 20 or newer) serves the files, adds the same security headers as the live site and answers addresses like `/hayvanlar` the way Vercel does.
+Then open `http://localhost:5175`. The small development server (Node.js 20 or newer) serves the files, adds the same security headers as the live site and answers addresses like `/kuslar` the way Vercel does.
 
 Run the tests (Node.js 20 or newer):
 
@@ -63,8 +63,8 @@ npm test
 ### Project structure
 
 ```
-data/words-tr.json  Turkish words (10 categories × 100)
-data/words-en.json  English words (10 categories × 100)
+data/words-tr.json  Turkish words (21 categories)
+data/words-en.json  English words (21 categories)
 src/game.js         Game rules: guesses, lives, hint, win and loss
 src/words.js        Loads and validates the word lists, picks words without repeats
 src/storage.js      Settings and stats in localStorage, with validation
@@ -90,7 +90,6 @@ tests/              Unit tests for rules, word lists and storage
 
 - Difficulty by word length
 - Two-player mode where one player enters the word
-- More categories
 
 ## License
 
