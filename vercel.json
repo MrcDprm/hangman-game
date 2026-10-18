@@ -1,13 +1,69 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "regions": ["fra1"],
+  "regions": [
+    "fra1"
+  ],
   "functions": {
-    "api/page.js": { "includeFiles": "app.html", "maxDuration": 10 }
+    "api/page.js": {
+      "includeFiles": "app.html",
+      "maxDuration": 10
+    }
   },
+  "redirects": [
+    {
+      "source": "/hayvanlar",
+      "destination": "/vahsi-hayvanlar",
+      "permanent": true
+    },
+    {
+      "source": "/sehirler",
+      "destination": "/iller",
+      "permanent": true
+    },
+    {
+      "source": "/yiyecek-ve-icecek",
+      "destination": "/yemekler",
+      "permanent": true
+    },
+    {
+      "source": "/teknoloji",
+      "destination": "/bilgisayar-parcalari",
+      "permanent": true
+    },
+    {
+      "source": "/spor",
+      "destination": "/spor-dallari",
+      "permanent": true
+    },
+    {
+      "source": "/doga",
+      "destination": "/yeryuzu-sekilleri",
+      "permanent": true
+    },
+    {
+      "source": "/ev",
+      "destination": "/mobilya",
+      "permanent": true
+    },
+    {
+      "source": "/bilim",
+      "destination": "/kimyasal-elementler",
+      "permanent": true
+    }
+  ],
   "rewrites": [
-    { "source": "/", "destination": "/api/page" },
-    { "source": "/sitemap.xml", "destination": "/api/page?sitemap=1" },
-    { "source": "/:slug([a-z0-9-]+)", "destination": "/api/page?slug=:slug" }
+    {
+      "source": "/",
+      "destination": "/api/page"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/page?sitemap=1"
+    },
+    {
+      "source": "/:slug([a-z0-9-]+)",
+      "destination": "/api/page?slug=:slug"
+    }
   ],
   "headers": [
     {
@@ -17,10 +73,22 @@
           "key": "Content-Security-Policy",
           "value": "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://www.miracdeprem.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
         },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
-        { "key": "Access-Control-Allow-Origin", "value": "https://hangman.miracdeprem.com" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://hangman.miracdeprem.com"
+        }
       ]
     }
   ]
