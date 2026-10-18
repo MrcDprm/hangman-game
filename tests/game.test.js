@@ -5,8 +5,13 @@ import {
 } from '../src/game.js';
 
 /** Harfleri sırayla tahmin eder. */
+// Baştan açık harf olmadan başlayan oyun: kural testleri rastgele açılan harften etkilenmesin
+function fresh(word, lang = 'en') {
+  return { ...createGame(word, lang), guessed: [], given: 0 };
+}
+
 function play(word, letters, lang = 'en') {
-  return [...letters].reduce((state, letter) => guess(state, letter), createGame(word, lang));
+  return [...letters].reduce((state, letter) => guess(state, letter), fresh(word, lang));
 }
 
 test('doğru tahmin harfi açar, hak gitmez', () => {
@@ -17,7 +22,7 @@ test('doğru tahmin harfi açar, hak gitmez', () => {
 });
 
 test('yanlış tahmin bir hak götürür, eski durum değişmez', () => {
-  const start = createGame('cat', 'en');
+  const start = fresh('cat');
   const next = guess(start, 'z');
   assert.equal(next.mistakes, 1);
   assert.deepEqual(start.guessed, []);
@@ -58,13 +63,14 @@ test('Türkçede I küçük ı, İ küçük i olur; İngilizcede I küçük i ol
 });
 
 
-test('uzun kelimelerde harf açık gelir: 8-10 harfte 1, 11 ve üstünde 2, kısa kelimede yok', () => {
-  assert.equal(createGame('cat', 'en').guessed.length, 0);
+test('her kelimede harf açık gelir: 3-6 harfte 1, 7-10 harfte 2, 11 ve üstünde 3', () => {
+  const short = createGame('kurt', 'tr'); // 4 harf
+  assert.equal(short.given, 1);
+  assert.ok(wordSlots(short).some((slot) => slot.found));
   const medium = createGame('elephant', 'en'); // 8 harf
-  assert.equal(medium.given, 1);
-  assert.ok(wordSlots(medium).some((slot) => slot.found));
+  assert.equal(medium.given, 2);
   const long = createGame('afyonkarahisar', 'tr'); // 14 harf
-  assert.equal(long.given, 2);
+  assert.equal(long.given, 3);
   assert.equal(long.mistakes, 0);
   assert.equal(long.status, 'playing');
 });
@@ -74,10 +80,12 @@ test('açık gelen harfler kelimeyi asla bitirmez, en az iki farklı harf gizli 
   const state = createGame('aaaabbbbccc', 'en');
   assert.equal(state.given, 1);
   assert.equal(hiddenLetters(state).length, 2);
+  // 3 harfli, 2 farklı harfli kelimede hiç açılmaz
+  assert.equal(createGame('aab', 'en').given, 0);
 });
 
 test('ipucu gizli bir harfi açar, bir hak götürür ve kelime başına bir kez kullanılır', () => {
-  const start = createGame('cat', 'en');
+  const start = createGame('cat', 'en', () => 0.99); // "t" baştan açık gelir
   const hinted = useHint(start, () => 0);
   assert.equal(hinted.hintLetter, 'c');
   assert.equal(hinted.mistakes, 1);

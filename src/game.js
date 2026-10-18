@@ -17,12 +17,15 @@ export function normalizeLetter(input, lang) {
   return ALPHABETS[lang].includes(letter) ? letter : null;
 }
 
-/** Uzun kelimelerde baştan açık gelen harf sayısı: 8-10 harfte 1, 11 ve üstünde 2. */
+/**
+ * Baştan açık gelen harf sayısı: her kelimede en az 1 (kısa kelimeler 6 hakla çok zordu),
+ * 7-10 harfte 2, 11 ve üstünde 3.
+ */
 export function givenLetterCount(word) {
   const length = [...word].length;
-  if (length >= 11) return 2;
-  if (length >= 8) return 1;
-  return 0;
+  if (length >= 11) return 3;
+  if (length >= 7) return 2;
+  return 1;
 }
 
 /** Kelimede henüz açılmamış harfler (her harf bir kez). */
@@ -34,7 +37,7 @@ const pick = (items, random) => items[Math.floor(random() * items.length)];
 
 /**
  * Yeni oyun. status: 'playing', 'won' ya da 'lost'.
- * Uzun kelimelerde bir iki harf baştan açılır; en az iki farklı harf her zaman gizli kalır.
+ * Birkaç harf baştan açılır; en az iki farklı harf her zaman gizli kalır.
  */
 export function createGame(word, lang, random = Math.random) {
   const guessed = [];
