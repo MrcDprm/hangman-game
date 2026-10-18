@@ -2,7 +2,7 @@
 
 [English](README.md) | **Türkçe**
 
-Sade HTML, CSS ve JavaScript ile yazılmış bir adam asmaca oyunu. Gizli kelimeyi, adam tamamen çizilmeden harf harf tahmin et. 10 kategoride 1.000 Türkçe ve 1.000 İngilizce kelime var.
+Sade HTML, CSS ve JavaScript ile yazılmış bir adam asmaca oyunu. Gizli kelimeyi, adam tamamen çizilmeden harf harf tahmin et. 21 dar kategoride yaklaşık 1.000 Türkçe ve 1.000 İngilizce kelime var; neyi tahmin ettiğini her zaman bilirsin.
 
 **Canlı demo:** [hangman.miracdeprem.com](https://hangman.miracdeprem.com)
 
@@ -10,7 +10,7 @@ Sade HTML, CSS ve JavaScript ile yazılmış bir adam asmaca oyunu. Gizli kelime
 
 ## Özellikler
 
-- **10 kategori, 2.000 kelime:** hayvanlar, ülkeler, şehirler, yiyecek ve içecek, meslekler, teknoloji, spor, doğa, ev ve bilim. Her kategoride 100 Türkçe ve 100 İngilizce kelime var.
+- **7 grupta 21 kategori, yaklaşık 2.000 kelime:** hayvanlar (vahşi hayvanlar, evcil ve çiftlik hayvanları, kuşlar, deniz canlıları), yerler (ülkeler, başkentler, Türkiye'nin illeri / ABD eyaletleri, yeryüzü şekilleri), yiyecek (meyveler, sebzeler, Türk mutfağı / dünya yemekleri), spor (spor dalları, spor ekipmanları), ev (mobilya, mutfak eşyaları, giysiler), bilim (bilgisayar parçaları, kimyasal elementler, uzay) ve insan (meslekler, vücudumuz). Her kategoride dil başına 39 ile 100 arasında kelime var.
 - **Tahmin**
   - Ekrandaki klavyeyle ya da kendi klavyenle tahmin edersin.
   - Alfabe dile göre değişir: Türkçede 29 harf (ç, ğ, ı, ö, ş, ü), İngilizcede 26 harf var.
@@ -25,7 +25,7 @@ Sade HTML, CSS ve JavaScript ile yazılmış bir adam asmaca oyunu. Gizli kelime
   - Tamamen klavyeyle oynanabilir; tur bitince Enter yeni kelime getirir.
   - Ekran okuyucu kelimenin durumunu ("Kelime, 5 harf: C, R, A, boş, boş") ve her tuşun durumunu okur.
   - Sistemdeki "hareketi azalt" ayarına uyar.
-- **Her kategorinin kendi adresi:** örneğin [/hayvanlar](https://hangman.miracdeprem.com/hayvanlar) ya da [/meslekler](https://hangman.miracdeprem.com/meslekler) oyunu o kategoride açar; Türkçe ya da İngilizce (`?lang=en`).
+- **Her kategorinin kendi adresi:** örneğin [/kuslar](https://hangman.miracdeprem.com/kuslar) ya da [/meslekler](https://hangman.miracdeprem.com/meslekler) oyunu o kategoride açar; Türkçe ya da İngilizce (`?lang=en`).
 - **Türkçe ve İngilizce**, [portfolyo sitemle](https://www.miracdeprem.com) uyumlu **koyu ve açık tema**.
 - **Duyarlı tasarım:** Masaüstünde iki sütun, telefonda tek sütun; uzun kelimeler her zaman tek satırda kalır.
 - **Geri bildirim:** Küçük bir düğme; ad (isteğe bağlı), e-posta ya da telefon ve mesaj içeren formu açar. Mesaj portfolyo sitem üzerinden doğrudan bana ulaşır.
@@ -52,7 +52,7 @@ cd hangman-game
 npm run dev
 ```
 
-Sonra `http://localhost:5175` adresini aç. Küçük geliştirme sunucusu (Node.js 20 veya üstü) dosyaları sunar, canlı sitedeki güvenlik başlıklarını ekler ve `/hayvanlar` gibi adresleri Vercel'deki gibi karşılar.
+Sonra `http://localhost:5175` adresini aç. Küçük geliştirme sunucusu (Node.js 20 veya üstü) dosyaları sunar, canlı sitedeki güvenlik başlıklarını ekler ve `/kuslar` gibi adresleri Vercel'deki gibi karşılar.
 
 Testleri çalıştırmak için (Node.js 20 veya üstü):
 
@@ -63,8 +63,8 @@ npm test
 ### Proje yapısı
 
 ```
-data/words-tr.json  Türkçe kelimeler (10 kategori × 100)
-data/words-en.json  İngilizce kelimeler (10 kategori × 100)
+data/words-tr.json  Türkçe kelimeler (21 kategori)
+data/words-en.json  İngilizce kelimeler (21 kategori)
 src/game.js         Oyun kuralları: tahmin, hak, ipucu, kazanma ve kaybetme
 src/words.js        Kelime listelerini yükler ve doğrular, tekrarsız kelime seçer
 src/storage.js      Ayarlar ve istatistikler (localStorage, doğrulamalı)
@@ -90,7 +90,6 @@ tests/              Kurallar, kelime listeleri ve kayıt için birim testleri
 
 - Kelime uzunluğuna göre zorluk
 - Bir oyuncunun kelimeyi girdiği iki kişilik mod
-- Daha fazla kategori
 
 ## Lisans
 
