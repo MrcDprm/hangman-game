@@ -18,7 +18,7 @@ A hangman word game in plain HTML, CSS and JavaScript. Guess the hidden word let
 - **Six lives:** each wrong guess draws a part of the man. Repeated letters, numbers and shortcuts like Ctrl+R never cost a life.
 - **Help for hard words**
   - **Hint button:** reveals one hidden letter for a life, once per word. It is locked on the last life and when only one letter is left.
-  - **Long words** start with one or two letters revealed (8–10 letters: 1, 11 or more: 2).
+  - **Every word** starts with letters revealed (3–6 letters: 1, 7–10: 2, 11 or more: 3); at least two different letters always stay hidden.
 - **No repeats:** while the page is open, every word in a category is played once before any word comes back.
 - **Stats:** wins, losses, current streak and best streak, kept after a page refresh.
 - **Accessible**

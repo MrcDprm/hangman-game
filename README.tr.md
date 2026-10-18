@@ -18,7 +18,7 @@ Sade HTML, CSS ve JavaScript ile yazılmış bir adam asmaca oyunu. Gizli kelime
 - **6 hak:** Her yanlış tahminde adamın bir parçası çizilir. Aynı harfi tekrar basmak, rakam ya da Ctrl+R gibi kısayollar hak götürmez.
 - **Zor kelimeler için yardım**
   - **İpucu butonu:** Bir hak karşılığında gizli bir harf açar, kelime başına bir kez kullanılır. Son hakta ve tek harf kaldığında kilitlenir.
-  - **Uzun kelimeler** bir iki harfi açık başlar (8-10 harf: 1, 11 ve üstü: 2).
+  - **Her kelime** bazı harfleri açık başlar (3-6 harf: 1, 7-10: 2, 11 ve üstü: 3); en az iki farklı harf her zaman gizli kalır.
 - **Tekrarsız kelime:** Sayfa açık kaldığı sürece kategorideki her kelime bir kez oynanmadan hiçbir kelime tekrar gelmez.
 - **İstatistikler:** Galibiyet, mağlubiyet, seri ve en iyi seri; sayfa yenilense de korunur.
 - **Erişilebilir**
