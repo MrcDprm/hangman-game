@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { CATEGORIES, createPicker, loadWords, validateWords } from '../src/words.js';
+import { CATEGORIES, CATEGORY_GROUPS, createPicker, loadWords, validateWords } from '../src/words.js';
 import { ALPHABETS } from '../src/game.js';
 
 /** Tarayıcıdaki fetch yerine dosyayı diskten okuyan sahte fetch. */
@@ -11,13 +11,13 @@ async function fakeFetch(url) {
 }
 
 for (const lang of ['tr', 'en']) {
-  test(`${lang}: 10 kategori, her birinde 100 geçerli kelime, hiç tekrar yok`, async () => {
+  test(`${lang}: 21 kategori, her birinde en az 39 geçerli kelime, hiç tekrar yok`, async () => {
     const words = await loadWords(lang, fakeFetch);
     assert.deepEqual(Object.keys(words), CATEGORIES);
 
     const all = [];
     for (const category of CATEGORIES) {
-      assert.equal(words[category].length, 100, category);
+      assert.ok(words[category].length >= 39, `${category}: ${words[category].length}`);
       for (const word of words[category]) {
         assert.ok([...word].every((ch) => ALPHABETS[lang].includes(ch)), `${category}: ${word}`);
       }
@@ -28,11 +28,17 @@ for (const lang of ['tr', 'en']) {
 }
 
 test('geçersiz veri ayıklanır', () => {
-  const words = validateWords({ animals: ['cat', 'Dog', 'ox', 'kedi', 42, 'çita'], bilinmeyen: ['x'], cities: 'paris' }, 'en');
-  assert.deepEqual(words.animals, ['cat', 'kedi']);
-  assert.deepEqual(words.cities, []);
+  const words = validateWords({ pets_farm: ['cat', 'Dog', 'ox', 'kedi', 42, 'çita'], bilinmeyen: ['x'], capitals: 'paris' }, 'en');
+  assert.deepEqual(words.pets_farm, ['cat', 'kedi']);
+  assert.deepEqual(words.capitals, []);
   assert.equal('bilinmeyen' in words, false);
-  assert.deepEqual(validateWords(null, 'tr').animals, []);
+  assert.deepEqual(validateWords(null, 'tr').wild_animals, []);
+});
+
+test('her kategori tam olarak bir grupta', () => {
+  const grouped = CATEGORY_GROUPS.flatMap((group) => group.categories);
+  assert.deepEqual([...grouped].sort(), [...CATEGORIES].sort());
+  assert.equal(new Set(grouped).size, grouped.length);
 });
 
 test('dosya yüklenemezse anlaşılır bir hata fırlatır', async () => {

@@ -1,7 +1,18 @@
 // Kelime listeleri: dile göre data/ klasöründen yüklenir, kategoriden tekrarsız kelime seçilir.
 import { ALPHABETS } from './game.js';
 
-export const CATEGORIES = ['animals', 'countries', 'cities', 'food', 'jobs', 'tech', 'sports', 'nature', 'home', 'science'];
+export const CATEGORIES = ['wild_animals', 'pets_farm', 'birds', 'sea_life', 'countries', 'capitals', 'regions', 'landforms', 'fruits', 'vegetables', 'dishes', 'sports', 'sports_gear', 'furniture', 'kitchen', 'clothes', 'computer', 'elements', 'space', 'jobs', 'body'];
+
+// Seçim kutusundaki gruplar (sıra ekrandaki sıradır)
+export const CATEGORY_GROUPS = [
+  { id: 'animals', categories: ['wild_animals', 'pets_farm', 'birds', 'sea_life'] },
+  { id: 'places', categories: ['countries', 'capitals', 'regions', 'landforms'] },
+  { id: 'food', categories: ['fruits', 'vegetables', 'dishes'] },
+  { id: 'sport', categories: ['sports', 'sports_gear'] },
+  { id: 'home', categories: ['furniture', 'kitchen', 'clothes'] },
+  { id: 'science', categories: ['computer', 'elements', 'space'] },
+  { id: 'people', categories: ['jobs', 'body'] },
+];
 
 /** Kelime dosyasını indirir ve doğrular. fetchFn testlerde sahtesiyle değiştirilebilir. */
 export async function loadWords(lang, fetchFn = fetch) {
