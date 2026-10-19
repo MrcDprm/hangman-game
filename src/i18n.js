@@ -74,6 +74,7 @@ export const MESSAGES = {
     feedbackTooMany: 'Çok hızlı gönderildi. Bir dakika sonra tekrar dene.',
     feedbackFailed: 'Gönderilemedi. Biraz sonra tekrar dene.',
     jsProjects: 'Projelerim',
+    otherProjects: 'Diğer projelerim',
   },
   en: {
     title: 'Hangman',
@@ -149,6 +150,7 @@ export const MESSAGES = {
     feedbackTooMany: 'Too many messages. Try again in a minute.',
     feedbackFailed: 'Could not send. Please try again later.',
     jsProjects: 'My projects',
+    otherProjects: 'My other projects',
   },
 };
 
