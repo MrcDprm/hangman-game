@@ -86,11 +86,6 @@ tests/              Kurallar, kelime listeleri ve kayıt için birim testleri
 - **SVG ve CSS ile çizim.** Adamın her parçası `pathLength="1"` verilmiş bir SVG çizgisi. Böylece tek bir CSS geçişi, gerçek uzunluğu ne olursa olsun her parçayı aynı şekilde "çiziyor".
 - **İçeriğe göre boyutlandırma.** Harf kutuları CSS container birimleri ve bir `--letters` değişkeniyle boyutlanıyor. 14 harflik bir kelime küçük bir telefonda bile tek satıra sığıyor.
 
-## Gelecek Planları
-
-- Kelime uzunluğuna göre zorluk
-- Bir oyuncunun kelimeyi girdiği iki kişilik mod
-
 ## Lisans
 
 [MIT](LICENSE)

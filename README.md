@@ -86,11 +86,6 @@ tests/              Unit tests for rules, word lists and storage
 - **Drawing with SVG and CSS.** Each part of the man is an SVG line with `pathLength="1"`, so one CSS transition "draws" every part the same way, whatever its real length.
 - **Sizing from content.** Letter boxes use CSS container units and a `--letters` variable, so a 14-letter word fits on one line even on a small phone.
 
-## Future Plans
-
-- Difficulty by word length
-- Two-player mode where one player enters the word
-
 ## License
 
 [MIT](LICENSE)
