@@ -40,7 +40,7 @@ Sade HTML, CSS ve JavaScript ile yazılmış bir adam asmaca oyunu. Gizli kelime
 ## Kullanılan Teknolojiler
 
 - HTML, CSS, JavaScript (ES modülleri, framework yok, derleme adımı yok)
-- Node.js'in yerleşik test aracı (`node --test`), 34 birim testi
+- Node.js'in yerleşik test aracı (`node --test`), 35 birim testi
 - Yayın: Vercel, güvenlik başlıklarıyla (Content Security Policy)
 
 ## Kurulum ve Çalıştırma

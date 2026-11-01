@@ -40,7 +40,7 @@ A hangman word game in plain HTML, CSS and JavaScript. Guess the hidden word let
 ## Tech Stack
 
 - HTML, CSS, JavaScript (ES modules, no framework, no build step)
-- Node.js built-in test runner (`node --test`), 34 unit tests
+- Node.js built-in test runner (`node --test`), 35 unit tests
 - Hosted on Vercel, with security headers (Content Security Policy)
 
 ## Installation
