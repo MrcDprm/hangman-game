@@ -4,7 +4,6 @@ import { CATEGORIES } from './words.js';
 
 export const STORAGE_KEY = 'hangman-settings';
 export const LANGUAGES = ['tr', 'en'];
-export const THEMES = ['dark', 'light'];
 export const EMPTY_STATS = Object.freeze({ wins: 0, losses: 0, streak: 0, bestStreak: 0 });
 
 /** Gizli sekmede ya da çerezler engelliyken localStorage'a erişmek bile hata fırlatabilir. */
@@ -32,7 +31,6 @@ export function loadSettings(storage = browserStorage(), fallbackLang = 'tr') {
   const stats = saved.stats ?? {};
   return {
     lang: oneOf(saved.lang, LANGUAGES, fallbackLang),
-    theme: oneOf(saved.theme, THEMES, 'dark'),
     category: oneOf(saved.category, CATEGORIES, CATEGORIES[0]),
     // Sadece bilinen istatistik alanları alınır, her biri sayı olarak doğrulanır
     stats: Object.fromEntries(Object.keys(EMPTY_STATS).map((key) => [key, count(stats[key])])),
@@ -41,9 +39,9 @@ export function loadSettings(storage = browserStorage(), fallbackLang = 'tr') {
 
 /** Sadece bilinen alanlar yazılır. Kaydedilemezse (depolama dolu/kapalı) oyun yine çalışır. */
 export function saveSettings(settings, storage = browserStorage()) {
-  const { lang, theme, category, stats } = settings;
+  const { lang, category, stats } = settings;
   try {
-    storage.setItem(STORAGE_KEY, JSON.stringify({ lang, theme, category, stats }));
+    storage.setItem(STORAGE_KEY, JSON.stringify({ lang, category, stats }));
     return true;
   } catch {
     return false;
