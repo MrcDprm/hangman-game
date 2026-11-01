@@ -3,9 +3,16 @@ import { ALPHABETS, MAX_MISTAKES, canUseHint, createGame, guess, livesLeft, useH
 import { CATEGORIES, CATEGORY_GROUPS, createPicker, loadWords } from './words.js';
 import { EMPTY_STATS, loadSettings, recordResult, saveSettings } from './storage.js';
 import { translate } from './i18n.js';
-import { applyTheme, nextTheme } from './theme.js';
 import { initFeedback } from './feedback.js';
 import { categoryFromPath, pageMeta, pathFor } from './routes.js';
+
+const SVG_NS = 'http://www.w3.org/2000/svg';
+// Kalan hakları gösteren kandil: gövde, alev ve alevin açık içi
+const LAMP_PATHS = {
+  'lamp-flame': 'M11 1C13 7 16 9 16 13A5 5 0 0 1 6 13C6 9 9 7 11 1Z',
+  'lamp-core': 'M11 8C12 10 13 11 13 13A2 2 0 0 1 9 13C9 11 10 10 11 8Z',
+  'lamp-body': 'M2 19H20C19 25 15 28 11 28C7 28 3 25 2 19Z',
+};
 
 const browserLang = navigator.language?.toLowerCase().startsWith('tr') ? 'tr' : 'en';
 const settings = loadSettings(undefined, browserLang);
@@ -20,6 +27,7 @@ let addressCategory = routeCategory;
 
 const el = {
   category: document.getElementById('category'),
+  stage: document.getElementById('stage'),
   figure: document.getElementById('figure'),
   parts: document.querySelectorAll('.figure .part'),
   livesDots: document.getElementById('lives-dots'),
@@ -30,7 +38,6 @@ const el = {
   newWord: document.getElementById('new-word'),
   hint: document.getElementById('hint'),
   resetStats: document.getElementById('reset-stats'),
-  themeToggle: document.getElementById('theme-toggle'),
   langButtons: document.querySelectorAll('[data-lang]'),
   stats: {
     wins: document.getElementById('stat-wins'),
@@ -103,20 +110,32 @@ function render() {
   el.status.textContent = statusText();
 }
 
+function createLamp() {
+  const lamp = document.createElementNS(SVG_NS, 'svg');
+  lamp.setAttribute('class', 'lamp');
+  lamp.setAttribute('viewBox', '0 0 22 30');
+  for (const [name, d] of Object.entries(LAMP_PATHS)) {
+    const path = document.createElementNS(SVG_NS, 'path');
+    path.setAttribute('class', name);
+    path.setAttribute('d', d);
+    lamp.append(path);
+  }
+  return lamp;
+}
+
 function renderFigure() {
   const mistakes = game?.mistakes ?? 0;
   el.parts.forEach((part, index) => part.classList.toggle('shown', index < mistakes));
-  el.figure.classList.toggle('won', game?.status === 'won');
-  el.figure.classList.toggle('lost', game?.status === 'lost');
+  // Oyun sonunda perdenin ışığı değişir (styles.css)
+  el.stage.classList.toggle('won', game?.status === 'won');
+  el.stage.classList.toggle('lost', game?.status === 'lost');
 
   const lives = game ? livesLeft(game) : MAX_MISTAKES;
-  el.livesDots.replaceChildren(
-    ...Array.from({ length: MAX_MISTAKES }, (_, index) => {
-      const dot = document.createElement('span');
-      if (index >= lives) dot.className = 'lost';
-      return dot;
-    }),
-  );
+  // Kandiller bir kez oluşturulur; yalnızca durumu değiştiği için sönme geçişi görünür
+  if (el.livesDots.children.length === 0) {
+    el.livesDots.append(...Array.from({ length: MAX_MISTAKES }, createLamp));
+  }
+  [...el.livesDots.children].forEach((lamp, index) => lamp.classList.toggle('out', index >= lives));
   el.livesText.textContent = lives === 1 ? t('livesOne') : t('lives', { lives });
 }
 
@@ -133,6 +152,8 @@ function renderWord() {
     ...slots.map(({ letter, found }) => {
       const slot = document.createElement('span');
       slot.className = found ? 'slot found' : lost ? 'slot missed' : 'slot';
+      // Kutular her çizimde yeniden oluşur; animasyon yalnızca az önce açılan harfte oynar
+      if (found && letter === game.guessed.at(-1)) slot.classList.add('fresh');
       slot.textContent = found || lost ? upper(letter) : '';
       return slot;
     }),
@@ -266,13 +287,7 @@ for (const button of el.langButtons) {
   });
 }
 
-el.themeToggle.addEventListener('click', () => {
-  settings.theme = nextTheme(settings.theme);
-  saveSettings(settings);
-  applyTheme(settings.theme);
-});
-
-applyTheme(settings.theme);
+document.getElementById('footer-year').textContent = new Date().getFullYear();
 renderStatic();
 newGame();
 initFeedback(t);
