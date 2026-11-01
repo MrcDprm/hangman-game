@@ -2,11 +2,11 @@
 
 **English** | [Türkçe](README.tr.md)
 
-A hangman word game in plain HTML, CSS and JavaScript. Guess the hidden word letter by letter before the man is drawn. It has about 1,000 Turkish and 1,000 English words in 21 narrow categories, so you always know what you are guessing.
+A hangman word game in plain HTML, CSS and JavaScript. Guess the hidden word letter by letter before the figure is complete. It has about 1,000 Turkish and 1,000 English words in 21 narrow categories, so you always know what you are guessing.
 
 **Live demo:** [hangman.miracdeprem.com](https://hangman.miracdeprem.com)
 
-![Playing in English with a hint used](docs/screenshot-play.png)
+![A Turkish game in progress on the shadow screen](docs/screenshot-play.png)
 
 ## Features
 
@@ -15,7 +15,7 @@ A hangman word game in plain HTML, CSS and JavaScript. Guess the hidden word let
   - Use the on-screen keyboard or your own keyboard.
   - The alphabet follows the language: Turkish has 29 letters (ç, ğ, ı, ö, ş, ü), English has 26.
   - Turkish case rules are handled: with Caps Lock on, `I` counts as `ı` and `İ` as `i`.
-- **Six lives:** each wrong guess draws a part of the man. Repeated letters, numbers and shortcuts like Ctrl+R never cost a life.
+- **Six lives:** on every wrong guess, the next part of the figure comes to the screen. Repeated letters, numbers and shortcuts like Ctrl+R never cost a life.
 - **Help for hard words**
   - **Hint button:** reveals one hidden letter for a life, once per word. It is locked on the last life and when only one letter is left.
   - **Every word** starts with letters revealed (3–6 letters: 1, 7–10: 2, 11 or more: 3); at least two different letters always stay hidden.
@@ -26,20 +26,21 @@ A hangman word game in plain HTML, CSS and JavaScript. Guess the hidden word let
   - Screen readers hear the word pattern ("Word, 5 letters: C, R, A, blank, blank") and each key's state.
   - Respects the "reduce motion" system setting.
 - **An address for every category:** for example [/kuslar](https://hangman.miracdeprem.com/kuslar) or [/meslekler](https://hangman.miracdeprem.com/meslekler) opens the game in that category, in Turkish or English (`?lang=en`).
-- **Turkish and English**, with a **dark and light theme** that match my [portfolio](https://www.miracdeprem.com).
+- **Turkish and English.**
+- **A shadow theatre:** the game plays on a backlit screen. On every wrong letter the next piece of the figure moves closer and its shadow sharpens, one of six oil lamps goes out, and the light dims when you lose.
 - **Responsive:** two columns on desktop, one column on phones; long words always stay on one line.
 - **Feedback:** a small button opens a form (name optional, email or phone, message) that sends straight to me through my portfolio site.
 
 ## Screenshots
 
-| Win, light theme (Turkish) | Lose | Phone |
+| Win | Lose | Phone |
 |---|---|---|
-| ![Won round in Turkish with the light theme](docs/screenshot-light.png) | ![Lost round showing the word](docs/screenshot-lost.png) | ![Phone layout with a long word](docs/screenshot-mobile.png) |
+| ![Won round in Turkish on a brightly lit screen](docs/screenshot-won.png) | ![Lost round showing the word](docs/screenshot-lost.png) | ![Phone layout with a long word](docs/screenshot-mobile.png) |
 
 ## Tech Stack
 
 - HTML, CSS, JavaScript (ES modules, no framework, no build step)
-- Node.js built-in test runner (`node --test`), 21 unit tests
+- Node.js built-in test runner (`node --test`), 34 unit tests
 - Hosted on Vercel, with security headers (Content Security Policy)
 
 ## Installation
@@ -69,8 +70,6 @@ src/game.js         Game rules: guesses, lives, hint, win and loss
 src/words.js        Loads and validates the word lists, picks words without repeats
 src/storage.js      Settings and stats in localStorage, with validation
 src/i18n.js         Turkish and English texts
-src/theme.js        Theme switching
-src/theme-init.js   Applies the saved theme before the first paint
 src/main.js         Connects everything to the page
 tests/              Unit tests for rules, word lists and storage
 ```
@@ -83,7 +82,7 @@ tests/              Unit tests for rules, word lists and storage
 - **A fair shuffle.** Words come from a shuffled "bag" built with the Fisher–Yates shuffle, so every order is equally likely and no word repeats until the bag is empty. The bag lives inside a closure, so nothing outside can change it.
 - **One path for every change.** A guess and a hint both return a new game state, and one `update` function takes care of saving stats and drawing the page. Passing functions around (`update(useHint)`) kept that code in one place.
 - **Race conditions.** If the player switches language while words are still loading, the old request must not overwrite the new game. Checking the settings again after `await` fixed that.
-- **Drawing with SVG and CSS.** Each part of the man is an SVG line with `pathLength="1"`, so one CSS transition "draws" every part the same way, whatever its real length.
+- **A shadow with CSS.** Each part of the figure is an SVG group that starts faint, blurred and slightly larger. One CSS transition on `filter` and `transform` brings it into focus, the way a shadow sharpens when a puppet moves toward the screen.
 - **Sizing from content.** Letter boxes use CSS container units and a `--letters` variable, so a 14-letter word fits on one line even on a small phone.
 
 ## License
